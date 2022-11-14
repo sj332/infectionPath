@@ -1,3 +1,10 @@
+//
+//  main.c
+//  infestPath
+//
+//  Created by Juyeop Kim on 2022/10/20.
+//
+
 #include <stdio.h>
 #include <string.h>
 #include "ifct_element.h"
@@ -11,37 +18,103 @@
 
 #define TIME_HIDE           2
 
-/* run this program using the console pauser or add your own getch, system("pause") or input loop */
-
+/*parameer 매개변수로 실행해야함*/
 int trackInfester(int patient_no, int *detected_time, int *place);
 int main(int argc, const char * argv[]) {
-	
-	int menu_selection;
+    
+    int menu_selection;
     void *ifct_element;
-    FILE* fp=NULL;
+    FILE* fp;
     int pIndex, age, time;
     int placeHist[N_HISTORY];
     
     //------------- 1. loading patient info file ------------------------------
-    
-	argv=fopen("/Users/user/Desktop/infectionPath/patientInfo_sample.txt","r");//1-1. FILE pointer open
-    
-	
-	if (argc != 2)
+    //1-1. FILE pointer open
+    if (argc != 2)
     {
         printf("[ERROR] syntax : infestPath (file path).");
         return -1;
     }
     
-    fp = fopen(argv[1],"r");
+    fp = fopen(argv[1],"r"); 
     if (fp == NULL)
     {
         printf("[ERROR] Failed to open database file!! (%s)\n", argv[1]);
         return -1;
     }
+    
+    
+    //1-2. loading each patient informations
+    while(3==fscanf(fp,"%d %d %d",pIndex,age,time))  //3가지 읽기 
+    {
+    	int i;
+    	for(i=0;i<3;i++)
+    		//for(j=0;j<)
+    		if(=="\n") 
+    		printf("%d",6);
+    		//fscanf(fp,"%*d %*d %*d %d %d %d %d %d",N_HISTORY); //5개 읽기 
+	}
 	
 	
-	fclose(fp);
+	//#endif 
+	//출력해보기 
 	
-	return 0;
+	
+    //1-3. FILE pointer close
+    fclose(fp);
+    
+    /*
+    {
+    	int place1,place2;
+		
+		place1=3;
+		place2=15;
+		
+		printf("The first place is %s\n",ifsele_getPlaceName(place1));
+		printf("The second place is %s\n",ifsele_getPlaceName(place1));
+	}
+    do {
+        printf("\n=============== INFECTION PATH MANAGEMENT PROGRAM (No. of patients : %i) =============\n", ifctdb_len());
+        printf("1. Print details about a patient.\n");                      //MENU_PATIENT
+        printf("2. Print list of patients infected at a place.\n");        //MENU_PLACE
+        printf("3. Print list of patients in a range of age.\n");          //MENU_AGE
+        printf("4. Track the root of the infection\n");                     //MENU_TRACK
+        printf("0. Exit.\n");                                               //MENU_EXIT
+        printf("=============== ------------------------------------------------------- =============\n\n");
+        
+        printf("Select a menu :");
+        scanf("%d", &menu_selection);
+        fflush(stdin);
+        
+        switch(menu_selection)
+        {
+            case MENU_EXIT:
+                printf("Exiting the program... Bye bye.\n");
+                break;
+                
+            case MENU_PATIENT:
+                
+                break;
+                
+            case MENU_PLACE:
+                
+                break;
+                
+            case MENU_AGE:
+                
+                break;
+                
+            case MENU_TRACK:
+                    
+                break;
+                
+            default:
+                printf("[ERROR Wrong menu selection! (%i), please choose between 0 ~ 4\n", menu_selection);
+                break;
+        }
+    
+    } while(menu_selection != 0);
+    
+    */
+    return 0;
 }
