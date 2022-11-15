@@ -18,7 +18,6 @@
 
 #define TIME_HIDE           2
 
-/*parameer 매개변수로 실행해야함*/
 int trackInfester(int patient_no, int *detected_time, int *place);
 int main(int argc, const char * argv[]) {
     
@@ -45,6 +44,7 @@ int main(int argc, const char * argv[]) {
     
     
     //1-2. loading each patient informations
+    /*
     while(3==fscanf(fp,"%d %d %d",pIndex,age,time))  //3가지 읽기 
     {
     	int i;
@@ -53,6 +53,11 @@ int main(int argc, const char * argv[]) {
     		if(=="\n") 
     		printf("%d",6);
     		//fscanf(fp,"%*d %*d %*d %d %d %d %d %d",N_HISTORY); //5개 읽기 
+	}
+	*/
+	char line[255];
+	while(fgets(line,sizeof(line),fp)!=NULL){
+		printf("%s",line);
 	}
 	
 	
