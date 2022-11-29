@@ -44,17 +44,22 @@ int main(int argc, const char * argv[]) {
     
     
     //1-2. loading each patient informations
-    /*
-    while(3==fscanf(fp,"%d %d %d",pIndex,age,time))  //3가지 읽기 
-    {
+   
+    while(3==fscanf(fp,"%d %d %d",&pIndex,&age,&time))  //3가지 읽기 
+    {	
     	int i;
-    	for(i=0;i<3;i++)
-    		//for(j=0;j<)
-    		if(=="\n") 
-    		printf("%d",6);
-    		//fscanf(fp,"%*d %*d %*d %d %d %d %d %d",N_HISTORY); //5개 읽기 
+    	for(i=0;i<5;i++)
+    		//if(=="\n")
+    		//placeHist[i]=fscanf(fp,)
+			{fscanf(fp,"%d",&placeHist[i]);
+    		printf("%i\t",placeHist[i]);
+    		}//printf("%i",3);
+    		 //5개 읽기
+	printf("\n");
 	}
-	*/
+	
+	// 결과: 8개(한줄)가 읽어짐 
+	
 	char line[255];
 	while(fgets(line,sizeof(line),fp)!=NULL){
 		printf("%s",line);
@@ -119,7 +124,7 @@ int main(int argc, const char * argv[]) {
         }
     
     } while(menu_selection != 0);
-    
     */
+	
     return 0;
 }
