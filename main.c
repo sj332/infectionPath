@@ -73,15 +73,15 @@ int main(int argc, const char * argv[]) {
     //1-3. FILE pointer close
     fclose(fp);
     
-    /*
+    
     {
     	int place1,place2;
 		
 		place1=3;
 		place2=15;
 		
-		printf("The first place is %s\n",ifsele_getPlaceName(place1));
-		printf("The second place is %s\n",ifsele_getPlaceName(place1));
+		printf("The first place is %s\n",ifctele_getPlaceName(place1));
+		printf("The second place is %s\n",ifctele_getPlaceName(place1));
 	}
     do {
         printf("\n=============== INFECTION PATH MANAGEMENT PROGRAM (No. of patients : %i) =============\n", ifctdb_len());
@@ -103,8 +103,9 @@ int main(int argc, const char * argv[]) {
                 break;
                 
             case MENU_PATIENT:
-                
-                break;
+                //ifct_element
+				//printf("age:%i\n",ifctele_getAge(ifct_element)); 
+                break;//포인터만 넘김 
                 
             case MENU_PLACE:
                 
@@ -124,7 +125,7 @@ int main(int argc, const char * argv[]) {
         }
     
     } while(menu_selection != 0);
-    */
+    
 	
     return 0;
 }

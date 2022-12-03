@@ -11,6 +11,10 @@
 
 #include "ifct_element.h"
 
+//place_t배열문법으로 
+
+
+
 typedef enum place {
     Seoul,          //0
     Jeju,           //1
@@ -52,7 +56,9 @@ typedef enum place {
     Istanbul,       //37
     Dubai,          //38
     CapeTown        //39
-} place_t;
+}place_t;
+
+//place_t p[N_HISTORY];
 
 char countryName[N_PLACE+1][MAX_PLACENAME] =
 {   "Seoul",
@@ -97,6 +103,30 @@ char countryName[N_PLACE+1][MAX_PLACENAME] =
     "CapeTown",
     "Unrecognized"
 };
+
+typedef struct ifs_ele{
+	int pIndex;//번호 >> 정수 
+	int age;//나이 >> 정수 
+	int time;//감염 시점>> (n일째) 정수 
+	place_t p1[N_HISTORY];//감염 직전 이동 경로>>place_t 배열 정수 배열(enum 이용)(문자열로 저장X)[N_HISTORY]
+} ifs_ele_t;
+
+
+static ifs_ele_t ifsarray[20]//링크드리스트,배열형태구조체
+static int ifs_cnt;
+
+ /*
+int function_{
+	ifs_ele_t ifs1;
+} 
+
+int ifctele_getAge(void* obj){
+	//구조체에서 나이의 값을 뺴줌
+	ifs_ele_t *strPtr=(ifs_ele_t*)obj;
+	
+	return (/*나이 출력*, 포인터로 멤버에 접근 문법/);
+}
+*/
 
 char*ifctele_getPlaceName(int placeIndex)
 {
