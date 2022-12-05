@@ -27,6 +27,8 @@ int main(int argc, const char * argv[]) {
     int pIndex, age, time;
     int placeHist[N_HISTORY];
     
+    ifctele_getPlaceName(placeHist[1]);
+    
     //------------- 1. loading patient info file ------------------------------
     //1-1. FILE pointer open
     if (argc != 2)
@@ -48,16 +50,19 @@ int main(int argc, const char * argv[]) {
     while(3==fscanf(fp,"%d %d %d",&pIndex,&age,&time))  //3가지 읽기 
     {	
     	int i;
+		printf("%i 번째 환자 감염 경로 : ",pIndex);
     	for(i=0;i<5;i++)
     		//if(=="\n")
     		//placeHist[i]=fscanf(fp,)
 			{fscanf(fp,"%d",&placeHist[i]);
-    		printf("%i\t",placeHist[i]);
+    		printf("%s\t",ifctele_getPlaceName(placeHist[i]));
     		}//printf("%i",3);
     		 //5개 읽기
 	printf("\n");
 	}
 	
+	
+
 	// 결과: 8개(한줄)가 읽어짐 
 	
 	char line[255];
@@ -81,7 +86,7 @@ int main(int argc, const char * argv[]) {
 		place2=15;
 		
 		printf("The first place is %s\n",ifctele_getPlaceName(place1));
-		printf("The second place is %s\n",ifctele_getPlaceName(place1));
+		printf("The second place is %s\n",ifctele_getPlaceName(place2));
 	}
     do {
         printf("\n=============== INFECTION PATH MANAGEMENT PROGRAM (No. of patients : %i) =============\n", ifctdb_len());
@@ -112,7 +117,7 @@ int main(int argc, const char * argv[]) {
                 break;
                 
             case MENU_AGE:
-                
+                printf("age:%i\n",ifctele_getAge(&ifct_element));
                 break;
                 
             case MENU_TRACK:
