@@ -113,7 +113,7 @@ int main(int argc, const char * argv[]) {
                 break;//포인터만 넘김 
                 
             case MENU_PLACE:
-                
+                printf("place:%i\n",ifctele_getHistPlaceIndex(&ifct_element,pIndex));
                 break;
                 
             case MENU_AGE:

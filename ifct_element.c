@@ -136,6 +136,14 @@ int ifctele_getAge(void* obj){
 	return(strPtr->age);//나이 출력,포인터로 멤버에 접근 문법
 }
 
+int ifctele_getHistPlaceIndex(void* obj, int index){
+	ifs_ele_t*strPtr=(ifs_ele_t*)obj;
+	return(strPtr->index);
+}
+unsigned int ifctele_getinfestedTime(void* obj){
+	ifs_ele_t*strPtr=(ifs_ele_t*)obj;
+	return(strPtr->detected_time);
+}
 
 char*ifctele_getPlaceName(int placeIndex)
 {
@@ -151,5 +159,5 @@ void ifsele_printElement()
 	번호, 나이, 감염시간 출력
 	for (이동 경로 별)
 		이동 경로 상의 장소 출력
-}*/
-
+}
+*/
