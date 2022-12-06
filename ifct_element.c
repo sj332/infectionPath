@@ -115,14 +115,21 @@ typedef struct ifs_ele{
 static ifs_ele_t ifsarray[20];//링크드리스트,배열형태구조체
 static int ifs_cnt;
 
-/*
-void* ifsele_genElement( 감염환자 정보들 )
+
+void* ifctele_genElement(int index, int age, unsigned int detected_time,
+ int history_place[N_HISTORY])//구조체 만드는 것 요청 함수 
 {
-	ifsarray[ifs_cnt] 배열의 ifs_cnt번째 요소에 입력 내용 저장;
+	ifsarray[ifs_cnt].index=index;//배열의 ifs_cnt번째 요소에 입력 내용 저장;
+	ifsarray[ifs_cnt].age=age;
+	ifsarray[ifs_cnt].detected_time=detected_time;
+	int i;
+	for(i=0;i<N_HISTORY)
+	{ifsarray[ifs_cnt].history_place[i]=history_place;}
 	ifs_cnt++;
 	
-	(void*)생성된 구조체의 포인터 반환;
-}*/
+	//(void*)생성된 구조체의 포인터 반환;
+	return (void*)&ifsarray[인덱스];
+}
 
  /*
 int function_{
@@ -150,8 +157,7 @@ char*ifctele_getPlaceName(int placeIndex)
 	return countryName[placeIndex];
 }
 
-/*
-void ifsele_printElement()
+void ifctele_printElement()
 {
 	ifctele_t* strPtr = (obj를 적절히 형변환);
 	for (ifs_cnt 반복)
@@ -160,4 +166,4 @@ void ifsele_printElement()
 	for (이동 경로 별)
 		이동 경로 상의 장소 출력
 }
-*/
+

@@ -46,7 +46,7 @@ int main(int argc, const char * argv[]) {
     
     
     //1-2. loading each patient informations
-   
+   ifctele_genElement(pIndex,age,time,placeHist[N_HISTORY]);
     while(3==fscanf(fp,"%d %d %d",&pIndex,&age,&time))  //3가지 읽기 
     {	
     	int i;
