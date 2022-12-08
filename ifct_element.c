@@ -104,6 +104,7 @@ char countryName[N_PLACE+1][MAX_PLACENAME] =
     "Unrecognized"
 };
 
+
 typedef struct ifs_ele{
 	int index;//번호 >> 정수 
 	int age;//나이 >> 정수 
@@ -112,23 +113,35 @@ typedef struct ifs_ele{
 } ifs_ele_t;
 
 
-static ifs_ele_t ifsarray[20];//링크드리스트,배열형태구조체
+//static ifs_ele_t ifsarray[20];//링크드리스트,배열형태구조체
+/*database c에 있음, 동적 메모리로 잡아서 이용
+데이터 인캡슐레이션
+ 
+*/
+
 static int ifs_cnt;
+//p=malloc(sizeof(ifs_le_t));
 
 
 void* ifctele_genElement(int index, int age, unsigned int detected_time,
- int history_place[N_HISTORY])//구조체 만드는 것 요청 함수 
+ int history_place[N_HISTORY])//구조체 하나 만드는 것 요청 함수, 포인터로 main에 
 {
-	ifsarray[ifs_cnt].index=index;//배열의 ifs_cnt번째 요소에 입력 내용 저장;
+	ifs_ele_t*ptr;
+	
+	ptr=malloc();
+	ptr->index=index;
+	
+	/*ifsarray[ifs_cnt].index=index;//배열의 ifs_cnt번째 요소에 입력 내용 저장;
 	ifsarray[ifs_cnt].age=age;
 	ifsarray[ifs_cnt].detected_time=detected_time;
-	int i;
-	for(i=0;i<N_HISTORY)
-	{ifsarray[ifs_cnt].history_place[i]=history_place;}
-	ifs_cnt++;
-	
+	*//*int i;
+	for(i=0;i<N_HISTORY)*/
+   // ifsarray[ifs_cnt].history_place[N_HISTORY]=history_place[N_HISTORY];
+	//ifs_cnt++; //리턴 사이에 free 넣지 마세요 
+	//return &ifsarray[ifs_cnt-1]; 
+	return ptr;
 	//(void*)생성된 구조체의 포인터 반환;
-	return (void*)&ifsarray[인덱스];
+	//return (void*)&ifsarray[인덱스];
 }
 
  /*
@@ -143,7 +156,7 @@ int ifctele_getAge(void* obj){
 	return(strPtr->age);//나이 출력,포인터로 멤버에 접근 문법
 }
 
-int ifctele_getHistPlaceIndex(void* obj, int index){
+int ifctele_getHistPlaceIndex(void* obj, int index){ //인덱스 포함하여 수정 
 	ifs_ele_t*strPtr=(ifs_ele_t*)obj;
 	return(strPtr->index);
 }
@@ -157,13 +170,17 @@ char*ifctele_getPlaceName(int placeIndex)
 	return countryName[placeIndex];
 }
 
-void ifctele_printElement()
+void ifctele_printElement(void* obj)
 {
-	ifctele_t* strPtr = (obj를 적절히 형변환);
-	for (ifs_cnt 반복)
+	int i;
+	ifs_ele_t* strPtr = (ifs_ele_t*)obj;
+	for (i=0;i<ifs_cnt;i++)
 {
-	번호, 나이, 감염시간 출력
-	for (이동 경로 별)
-		이동 경로 상의 장소 출력
+	printf("age: %i\n",strPtr->age); 
+	printf("index:%i\n",strPtr->index);
+	printf("time:%i\n",strPtr->detected_time);
+	//번호, 나이, 감염시간 출력
+	/*for (이동 경로 별)
+		이동 경로 상의 장소 출력*/
 }
-
+}

@@ -12,6 +12,6 @@
 int ifctdb_addTail(void* obj);          //add data to tail
 int ifctdb_deleteData(int index);       //delete data
 int ifctdb_len(void);                   //get database length
-void* ifctdb_getData(int index);        //get index'th data
+void* ifctdb_getData(int index);        //get index'th data n번째 데이터 가져온다 ㅇ데이더 n 
 
 #endif /* ifct_database_h */

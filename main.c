@@ -55,14 +55,17 @@ int main(int argc, const char * argv[]) {
     		//if(=="\n")
     		//placeHist[i]=fscanf(fp,)
 			{fscanf(fp,"%d",&placeHist[i]);
-    		printf("%s\t",ifctele_getPlaceName(placeHist[i]));
-    		}//printf("%i",3);
+    		printf("%s\t",ifctele_getPlaceName(placeHist[i])); //구조체 넘기면 된다. 
+    		ifct_element=ifctele_genElement(pIndex,age,time,placeHist[N_HISTORY]);
+			}//printf("%i",3);
     		 //5개 읽기
+    		 ifctdb_addTail(ifct_element); //링크드리스트에 환자 정보 전달 
 	printf("\n");
 	}
 	
+	//isdb_tail로 메인에 전달 
 	
-
+	
 	// 결과: 8개(한줄)가 읽어짐 
 	
 	char line[255];
@@ -93,7 +96,7 @@ int main(int argc, const char * argv[]) {
         printf("1. Print details about a patient.\n");                      //MENU_PATIENT
         printf("2. Print list of patients infected at a place.\n");        //MENU_PLACE
         printf("3. Print list of patients in a range of age.\n");          //MENU_AGE
-        printf("4. Track the root of the infection\n");                     //MENU_TRACK
+        printf("4. Track the root of the infection\n");    //알고리즘, 가장 어려움, 15주차                 //MENU_TRACK
         printf("0. Exit.\n");                                               //MENU_EXIT
         printf("=============== ------------------------------------------------------- =============\n\n");
         
@@ -101,7 +104,7 @@ int main(int argc, const char * argv[]) {
         scanf("%d", &menu_selection);
         fflush(stdin);
         
-        switch(menu_selection)
+        switch(menu_selection) //n번째 환자 정보를 가져오고, printelement로 출력 
         {
             case MENU_EXIT:
                 printf("Exiting the program... Bye bye.\n");
@@ -112,7 +115,7 @@ int main(int argc, const char * argv[]) {
 				//printf("age:%i\n",ifctele_getAge(ifct_element)); 
                 break;//포인터만 넘김 
                 
-            case MENU_PLACE:
+            case MENU_PLACE: //지정장소와 같으면 출력하고 아니면 skip 
                 printf("place:%i\n",ifctele_getHistPlaceIndex(&ifct_element,pIndex));
                 break;
                 
