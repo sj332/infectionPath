@@ -126,19 +126,20 @@ static int ifs_cnt;
 void* ifctele_genElement(int index, int age, unsigned int detected_time,
  int history_place[N_HISTORY])//구조체 하나 만드는 것 요청 함수, 포인터로 main에 
 {
-	ifs_ele_t*ptr;
+	ifs_ele_t* ptr;
 	
-	ptr=malloc();
+	ptr=(void*)malloc(sizeof(ifs_ele_t)*N_HISTORY);
 	ptr->index=index;
-	
+	ptr->age=age;
+	ptr->detected_time=detected_time;
 	/*ifsarray[ifs_cnt].index=index;//배열의 ifs_cnt번째 요소에 입력 내용 저장;
 	ifsarray[ifs_cnt].age=age;
-	ifsarray[ifs_cnt].detected_time=detected_time;
-	*//*int i;
-	for(i=0;i<N_HISTORY)*/
-   // ifsarray[ifs_cnt].history_place[N_HISTORY]=history_place[N_HISTORY];
-	//ifs_cnt++; //리턴 사이에 free 넣지 마세요 
-	//return &ifsarray[ifs_cnt-1]; 
+	ifsarray[ifs_cnt].detected_time=detected_time;*/
+	/*int i;
+	for(i=0;i<N_HISTORY;i++){
+    	ifsarray[ifs_cnt].history_place[N_HISTORY]=history_place[N_HISTORY];
+		//ifs_cnt++; //리턴 사이에 free 넣지 마세요 
+	}//return &ifsarray[ifs_cnt-1];*/ 
 	return ptr;
 	//(void*)생성된 구조체의 포인터 반환;
 	//return (void*)&ifsarray[인덱스];
@@ -152,17 +153,18 @@ int function_{
 
 int ifctele_getAge(void* obj){
 	//구조체에서 나이의 값을 뺴줌
-	ifs_ele_t*strPtr=(ifs_ele_t*)obj;
-	return(strPtr->age);//나이 출력,포인터로 멤버에 접근 문법
+	ifs_ele_t*ptr=(ifs_ele_t*)obj;
+	return(ptr->age);//나이 출력,포인터로 멤버에 접근 문법
 }
 
 int ifctele_getHistPlaceIndex(void* obj, int index){ //인덱스 포함하여 수정 
 	ifs_ele_t*strPtr=(ifs_ele_t*)obj;
 	return(strPtr->index);
 }
+
 unsigned int ifctele_getinfestedTime(void* obj){
-	ifs_ele_t*strPtr=(ifs_ele_t*)obj;
-	return(strPtr->detected_time);
+	ifs_ele_t*ptr=(ifs_ele_t*)obj;
+	return(ptr->detected_time);
 }
 
 char*ifctele_getPlaceName(int placeIndex)
@@ -170,17 +172,17 @@ char*ifctele_getPlaceName(int placeIndex)
 	return countryName[placeIndex];
 }
 
-void ifctele_printElement(void* obj)
-{
+void ifctele_printElement(void* obj){
 	int i;
-	ifs_ele_t* strPtr = (ifs_ele_t*)obj;
-	for (i=0;i<ifs_cnt;i++)
-{
-	printf("age: %i\n",strPtr->age); 
-	printf("index:%i\n",strPtr->index);
-	printf("time:%i\n",strPtr->detected_time);
+	ifs_ele_t* ptr = (ifs_ele_t*)obj;
+	printf("age: %i\n",&ptr->age); 
+	printf("index:%i\n",&ptr->index);
+	printf("time:%i\n",&ptr->detected_time);
+	for (i=0;i<ifs_cnt;i++){
+		printf("%i: ",placeHistory[i]);
 	//번호, 나이, 감염시간 출력
 	/*for (이동 경로 별)
 		이동 경로 상의 장소 출력*/
-}
+//}
+//	return 0;
 }
