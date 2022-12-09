@@ -178,11 +178,12 @@ void ifctele_printElement(void* obj){
 	printf("age: %i\n",&ptr->age); 
 	printf("index:%i\n",&ptr->index);
 	printf("time:%i\n",&ptr->detected_time);
-	for (i=0;i<ifs_cnt;i++){
-		printf("%i: ",placeHistory[i]);
+	printf("place: ");
+	for (i=0;i<5;i++){ //ifs_cnt	
+		printf("%s\t",ifctele_getPlaceName(ptr->history_place[i]));
 	//번호, 나이, 감염시간 출력
 	/*for (이동 경로 별)
 		이동 경로 상의 장소 출력*/
-//}
-//	return 0;
+}
+	return 0;
 }

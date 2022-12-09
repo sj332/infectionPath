@@ -50,14 +50,14 @@ int main(int argc, const char * argv[]) {
     while(3==fscanf(fp,"%d %d %d",&pIndex,&age,&time))  //3가지 읽기 
     {	
     	int i;
-		printf("%i 번째 환자 감염 경로 : ",pIndex);
+		//printf("%i 번째 환자 감염 경로 : ",pIndex);
     	for(i=0;i<5;i++){
 			fscanf(fp,"%d",&placeHist[i]);
-    		printf("%s\t",ifctele_getPlaceName(placeHist[i])); //구조체 넘기면 된다. 
+    		//printf("%s\t",ifctele_getPlaceName(placeHist[i])); //구조체 넘기면 된다. 
     		ifct_element=ifctele_genElement(pIndex,age,time,placeHist[N_HISTORY]);
 			}
     		ifctdb_addTail(ifct_element); //링크드리스트에 환자 정보 전달 
-	printf("\n");
+	//printf("\n");
 	}
 	
 	//isdb_tail로 메인에 전달 
@@ -77,13 +77,13 @@ int main(int argc, const char * argv[]) {
 
     
     {
-    	int place1,place2;
+    	//int place1,place2;
 		
-		place1=3;
-		place2=15;
+		//place1=3;
+		//place2=15;
 		
-		printf("The first place is %s\n",ifctele_getPlaceName(place1));
-		printf("The second place is %s\n",ifctele_getPlaceName(place2));
+		//printf("The first place is %s\n",ifctele_getPlaceName(place1));
+		//printf("The second place is %s\n",ifctele_getPlaceName(place2));
 	}
     do {
         printf("\n=============== INFECTION PATH MANAGEMENT PROGRAM (No. of patients : %i) =============\n", ifctdb_len());
@@ -105,7 +105,7 @@ int main(int argc, const char * argv[]) {
                 break;
                 
             case MENU_PATIENT:
-                //ifct_element
+                ifct_element;
 				//printf("age:%i\n",ifctele_getAge(ifct_element)); 
                 printf("enter patient index: ");
 				scanf("%i",&pIndex);
