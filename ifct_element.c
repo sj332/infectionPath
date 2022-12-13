@@ -135,11 +135,13 @@ void* ifctele_genElement(int index, int age, unsigned int detected_time,
 	/*ifsarray[ifs_cnt].index=index;//배열의 ifs_cnt번째 요소에 입력 내용 저장;
 	ifsarray[ifs_cnt].age=age;
 	ifsarray[ifs_cnt].detected_time=detected_time;*/
-	/*int i;
+	
+	int i;
 	for(i=0;i<N_HISTORY;i++){
-    	ifsarray[ifs_cnt].history_place[N_HISTORY]=history_place[N_HISTORY];
-		//ifs_cnt++; //리턴 사이에 free 넣지 마세요 
-	}//return &ifsarray[ifs_cnt-1];*/ 
+    	ptr->history_place[i]=history_place[i];
+		ifs_cnt++; //리턴 사이에 free 넣지 마세요 
+	}
+	//return &ifsarray[ifs_cnt-1];
 	return ptr;
 	//(void*)생성된 구조체의 포인터 반환;
 	//return (void*)&ifsarray[인덱스];
@@ -174,10 +176,10 @@ char*ifctele_getPlaceName(int placeIndex)
 
 void ifctele_printElement(void* obj){
 	int i;
-	ifs_ele_t* ptr = (ifs_ele_t*)obj;
-	printf("age: %i\n",&ptr->age); 
-	printf("index:%i\n",&ptr->index);
-	printf("time:%i\n",&ptr->detected_time);
+	ifs_ele_t*ptr = (ifs_ele_t*)obj;
+	printf("index:%i\n",ptr->index);
+	printf("age: %i\n",ptr->age);
+	printf("time:%i\n",ptr->detected_time);
 	printf("place: ");
 	for (i=0;i<5;i++){ //ifs_cnt	
 		printf("%s\t",ifctele_getPlaceName(ptr->history_place[i]));

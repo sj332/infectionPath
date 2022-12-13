@@ -46,7 +46,7 @@ int main(int argc, const char * argv[]) {
     
     
     //1-2. loading each patient informations
-   ifctele_genElement(pIndex,age,time,placeHist[N_HISTORY]);
+    //ifctele_genElement(pIndex,age,time,placeHist[N_HISTORY]);
     while(3==fscanf(fp,"%d %d %d",&pIndex,&age,&time))  //3가지 읽기 
     {	
     	int i;
@@ -54,16 +54,17 @@ int main(int argc, const char * argv[]) {
     	for(i=0;i<5;i++){
 			fscanf(fp,"%d",&placeHist[i]);
     		//printf("%s\t",ifctele_getPlaceName(placeHist[i])); //구조체 넘기면 된다. 
-    		ifct_element=ifctele_genElement(pIndex,age,time,placeHist[N_HISTORY]);
-			}
-    		ifctdb_addTail(ifct_element); //링크드리스트에 환자 정보 전달 
+    		
+		}
+		ifct_element=ifctele_genElement(pIndex,age,time,placeHist);
+    	ifctdb_addTail(ifct_element); //링크드리스트에 환자 정보 전달 
 	//printf("\n");
 	}
 	
 	//isdb_tail로 메인에 전달 
 	
 	
-	char line[255];
+	char line[255];  
 	while(fgets(line,sizeof(line),fp)!=NULL){
 		printf("%s",line);
 	}
@@ -105,12 +106,14 @@ int main(int argc, const char * argv[]) {
                 break;
                 
             case MENU_PATIENT:
-                ifct_element;
+                
 				//printf("age:%i\n",ifctele_getAge(ifct_element)); 
                 printf("enter patient index: ");
 				scanf("%i",&pIndex);
+				
+				ifct_element = ifctdb_getData(pIndex);
 				//ifctele_printElement();
-				ifctele_printElement(pIndex);
+				ifctele_printElement(ifct_element);
 				break;//포인터만 넘김 
                 
             case MENU_PLACE: //지정장소와 같으면 출력하고 아니면 skip 
