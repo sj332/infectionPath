@@ -14,7 +14,6 @@
 //place_t배열문법으로 
 
 
-
 typedef enum place {
     Seoul,          //0
     Jeju,           //1
@@ -149,20 +148,27 @@ void* ifctele_genElement(int index, int age, unsigned int detected_time,
 
 
 int ifctele_getHistPlaceIndex(void* obj, int index){ //인덱스 포함하여 수정 
-	ifs_ele_t*ptr=(ifs_ele_t*)obj;
+	ifs_ele_t*ptr=(ifs_ele_t*)obj;/*
 	int i;
 	int cnt;
 	char ppp;
 	for(i=0;i<5;i++)){
 	if index==ptr->history_place[4]){
 			ifctele_printElement(ptr->index)
-			cnt++}
-			
+			cnt++}*/
+	//ifctele_getPlaceName(ptr->history_place[4])
+	
+	/*		
 	else{
 		printf("There are %i patients detected in %s",cnt,ifctele_getPlaceName(ptr->index));}
-	
-	
-	return(strPtr->index);
+	*/
+	int i;
+	for(i=0;i<40;i++){
+		if(ifctele_getPlaceName(ptr->history_place[3])==place_t[i]){
+			index=i;
+		}
+	}
+	return();
 }
 
  /*

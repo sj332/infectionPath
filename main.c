@@ -112,16 +112,24 @@ int main(int argc, const char * argv[]) {
             	{
 				
 				int i;
-				char placeinput;
+				char placeinput[20];
                 printf("Place Name: ");
 				scanf("%s",&placeinput);
 				int pIndex;
 				
-				for(i=0;i<place_t.size();i++){
-					if placeinput==place_t[i]{
-						pIndex=i;}
-								}
-				}
+				for(i=0;i<5;i++){
+					ifct_element = ifctdb_getData(placeHist);
+					pIndex=getHistPlaceIndex(ifct_element,i);
+					if(ifctele_getPlaceName(pIndex)==placeinput){
+						printf("%");
+					}
+					/*
+				    i번째 구조체 instance 추출; //ifctdb_getData() 함수 활용
+        			i번쩨 구조체 instance의 발병확인된 장소 번호 추출; // getHistPlaceIndex 함수 활용
+        			if ( 발병된 장소 번호를 변환한 문자열이 입력된 문자열과 같으면)
+                		i번째 구조체 instance를 출력;}
+								}*/
+				}/*
 				ifct_element = ifctdb_getData(pIndex);
 				ifctele_getHistPlaceIndex(ifct_element);
 				ifctele_getHistPlaceIndex(ifct_element,pIndex);
@@ -130,12 +138,12 @@ int main(int argc, const char * argv[]) {
 				  if(countryName[i] == placeinput)
 				int index=i;
 				else if
-				int index=-1}
-				printf("There are %i patients detected in %s",0,place;}
+				int index=-1}*/
+				/*printf("There are %i patients detected in %s",0,place;}
 				ifct_element = ifctdb_getData(place);
                 
-				printf("place:%i\n",ifctele_getHistPlaceIndex(&ifct_element,pIndex));
-				ifctele_getHistPlaceIndex(ifct_element,pIndex);
+				printf("Place Name:%i\n",ifctele_getHistPlaceIndex(&ifct_element,pIndex));
+				ifctele_getHistPlaceIndex(ifct_element,pIndex);*/
 				break;
                 }
             case MENU_AGE:
