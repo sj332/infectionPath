@@ -117,7 +117,7 @@ int main(int argc, const char * argv[]) {
 				scanf("%s",&placeinput);
 				int pIndex;
 				
-				for(i=0;i<place_t.size(place_t);i++){
+				for(i=0;i<place_t.size();i++){
 					if placeinput==place_t[i]{
 						pIndex=i;}
 								}
