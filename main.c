@@ -64,12 +64,6 @@ int main(int argc, const char * argv[]) {
 	//isdb_tail로 메인에 전달 
 	
 	
-	char line[255];  
-	while(fgets(line,sizeof(line),fp)!=NULL){
-		printf("%s",line);
-	}
-	
-	
 	//#endif  
 	
 	
@@ -109,23 +103,51 @@ int main(int argc, const char * argv[]) {
                 
 				//printf("age:%i\n",ifctele_getAge(ifct_element)); 
                 printf("enter patient index: ");
-				scanf("%i",&pIndex);
-				
+				scanf("%i",&pIndex);				
 				ifct_element = ifctdb_getData(pIndex);
-				//ifctele_printElement();
 				ifctele_printElement(ifct_element);
 				break;//포인터만 넘김 
                 
             case MENU_PLACE: //지정장소와 같으면 출력하고 아니면 skip 
-                printf("place:%i\n",ifctele_getHistPlaceIndex(&ifct_element,pIndex));
-				break;
+            	{
+				
+				int i;
+				char placeinput;
+                printf("Place Name: ");
+				scanf("%s",&placeinput);
+				int pIndex;
+				
+				for(i=0;i<place_t.size(place_t);i++){
+					if placeinput==place_t[i]{
+						pIndex=i;}
+								}
+				}
+				ifct_element = ifctdb_getData(pIndex);
+				ifctele_getHistPlaceIndex(ifct_element);
+				ifctele_getHistPlaceIndex(ifct_element,pIndex);
+				//for(int i = 0; i <5; i++){
+  				
+				  if(countryName[i] == placeinput)
+				int index=i;
+				else if
+				int index=-1}
+				printf("There are %i patients detected in %s",0,place;}
+				ifct_element = ifctdb_getData(place);
                 
+				printf("place:%i\n",ifctele_getHistPlaceIndex(&ifct_element,pIndex));
+				ifctele_getHistPlaceIndex(ifct_element,pIndex);
+				break;
+                }
             case MENU_AGE:
                 printf("age:%i\n",ifctele_getAge(&ifct_element));
-                break;
+                
+				break;
                 
             case MENU_TRACK: //감염경로 추적, 최초의 전파자 
-            /*PPT에서 알고리즘에 답 있음, 
+            	//printf("Patient index :%i\n",);
+			
+			
+			/*PPT에서 알고리즘에 답 있음, 
 			1) 같은 시점과 장소
 			2) 1일 전, 2일 전에 전피 가능
 			3) , 잠복기중 전염x 2////일 전,  3일 전, 4일 전에 잠복 가능
