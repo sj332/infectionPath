@@ -148,9 +148,8 @@ void* ifctele_genElement(int index, int age, unsigned int detected_time,
 
 
 int ifctele_getHistPlaceIndex(void* obj, int index){ //인덱스 포함하여 수정 
-	ifs_ele_t*ptr=(ifs_ele_t*)obj;/*
-	int i;
-	int cnt;
+	ifs_ele_t*ptr=(ifs_ele_t*)obj;
+	/*
 	char ppp;
 	for(i=0;i<5;i++)){
 	if index==ptr->history_place[4]){
@@ -162,15 +161,16 @@ int ifctele_getHistPlaceIndex(void* obj, int index){ //인덱스 포함하여 수정
 	else{
 		printf("There are %i patients detected in %s",cnt,ifctele_getPlaceName(ptr->index));}
 	*/
-	int i;
-	for(i=0;i<40;i++){
-		if(ifctele_getPlaceName(ptr->history_place[3])==place_t[i]){
+	//int i;
+	return(ptr->history_place[4]);
+}
+/*
+	for(i=0;i<40;i++){  ///ERROR
+		if(ptr->history_place[4]==i){
 			index=i;
 		}
 	}
-	return();
-}
-
+	return(index);*/
  /*
 int function_{
 	ifs_ele_t ifs1;
@@ -206,6 +206,7 @@ void ifctele_printElement(void* obj){
 	//번호, 나이, 감염시간 출력
 	/*for (이동 경로 별)
 		이동 경로 상의 장소 출력*/
-}
+}	
+	printf("\n");
 	return 0;
 }

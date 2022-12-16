@@ -26,7 +26,9 @@ int main(int argc, const char * argv[]) {
     FILE* fp;
     int pIndex, age, time;
     int placeHist[N_HISTORY];
-    
+    int i;
+    int age_min;
+    int age_max;
     ifctele_getPlaceName(placeHist[1]);
     
     //------------- 1. loading patient info file ------------------------------
@@ -112,24 +114,30 @@ int main(int argc, const char * argv[]) {
             	{
 				
 				int i;
-				char placeinput[20];
+				char placeinput[40];
                 printf("Place Name: ");
 				scanf("%s",&placeinput);
 				int pIndex;
-				
+				int cnt=0;
 				for(i=0;i<5;i++){
-					ifct_element = ifctdb_getData(placeHist);
-					pIndex=getHistPlaceIndex(ifct_element,i);
-					if(ifctele_getPlaceName(pIndex)==placeinput){
-						printf("%");
+					ifct_element = ifctdb_getData(i);
+					pIndex=ifctele_getHistPlaceIndex(ifct_element,i);
+					
+					if(!strcmp(ifctele_getPlaceName(pIndex),placeinput)){
+						cnt++;
+						ifctele_printElement(ifct_element);
 					}
+					//ifctele_getPlaceName(pIndex)==placeinput
 					/*
 				    i번째 구조체 instance 추출; //ifctdb_getData() 함수 활용
         			i번쩨 구조체 instance의 발병확인된 장소 번호 추출; // getHistPlaceIndex 함수 활용
         			if ( 발병된 장소 번호를 변환한 문자열이 입력된 문자열과 같으면)
                 		i번째 구조체 instance를 출력;}
 								}*/
-				}/*
+				//ifctele_getPlaceName(pIndex)
+				}
+				printf("\n");
+				printf("There are %i patients detected in %s",cnt,placeinput);/*
 				ifct_element = ifctdb_getData(pIndex);
 				ifctele_getHistPlaceIndex(ifct_element);
 				ifctele_getHistPlaceIndex(ifct_element,pIndex);
@@ -147,8 +155,18 @@ int main(int argc, const char * argv[]) {
 				break;
                 }
             case MENU_AGE:
-                printf("age:%i\n",ifctele_getAge(&ifct_element));
-                
+            	
+                //printf("age:%i\n",ifctele_getAge(ifct_element));
+                printf("minimal age: ");
+                scanf("%i",&age_min);
+                printf("maximal age: ");
+                scanf("%i",&age_max);
+                for(i=0;i<5;i++){
+					ifct_element = ifctdb_getData(i);
+                	if(age_min<=ifctele_getAge(ifct_element)&&ifctele_getAge(ifct_element)<=age_max){
+				ifctele_printElement(ifct_element);}
+				}
+				
 				break;
                 
             case MENU_TRACK: //감염경로 추적, 최초의 전파자 
