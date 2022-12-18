@@ -18,7 +18,28 @@
 
 #define TIME_HIDE           2
 
-int trackInfester(int patient_no, int *detected_time, int *place);
+
+///일반적인 파일도 적용되도록 값 일반화 수정 (예시 파일) 
+
+int trackInfester(int patient_no, int *detected_time, int *place){
+	int i;
+	for(i=0;i<5;i++)
+	{
+		int met_time;
+		void *ifct_element;
+		ifct_element = ifctdb_getData(i);
+		//place_index=ifctele_getHistPlaceIndex(ifct_element,N_HISTORY-1)
+		met_time=isMet(ifct_element,patient_no,i);
+		if(met_time>0)//만났다면
+		{
+			if(met_time<isMet(ifct_element,patient_no,i+1))
+			{
+				patient_no=i;
+			}
+		 } 
+	}
+	return patient_no;
+}
 int main(int argc, const char * argv[]) {
     
     int menu_selection;
@@ -117,13 +138,13 @@ int main(int argc, const char * argv[]) {
 				char placeinput[40];
                 printf("Place Name: ");
 				scanf("%s",&placeinput);
-				int pIndex;
+				int place_index;
 				int cnt=0;
 				for(i=0;i<5;i++){
 					ifct_element = ifctdb_getData(i);
-					pIndex=ifctele_getHistPlaceIndex(ifct_element,i);
+					place_index=ifctele_getHistPlaceIndex(ifct_element,N_HISTORY-1);
 					
-					if(!strcmp(ifctele_getPlaceName(pIndex),placeinput)){
+					if(!strcmp(ifctele_getPlaceName(place_index),placeinput)){
 						cnt++;
 						ifctele_printElement(ifct_element);
 					}
@@ -171,7 +192,34 @@ int main(int argc, const char * argv[]) {
                 
             case MENU_TRACK: //감염경로 추적, 최초의 전파자 
             	//printf("Patient index :%i\n",);
-			
+            	for(i=0;i<5;i++){
+				ifct_element = ifctdb_getData(i);
+				//pIndex=ifctele_getHistPlaceIndex(ifct_element,i);
+            	}
+            
+				int patient_now;
+				int patient_ifc;
+				int patient_fir;
+				int *place_index;
+				int *detected_time;
+				
+				printf("Patient index :");
+				scanf("%i",patient_now);
+				
+				while(0<=patient_now&&patient_now<=4){
+					ifct_element = ifctdb_getData(i);
+					place_index=ifctele_getHistPlaceIndex(ifct_element,4);
+					detected_time=ifctele_getinfestedTime(ifct_element);
+					patient_ifc=trackInfester(patient_now,place_index,detected_time);
+					if(0<=patient_ifc&&patient_ifc<=4){
+						printf("patient %i is infected by %i \n",patient_now, patient_ifc);}
+					else{
+						patient_fir=patient_now;
+						patient_now=patient_ifc; 
+					}
+					} 
+			//"%i is the first infector!!"
+			//"The first infector of %i is %i"
 			
 			/*PPT에서 알고리즘에 답 있음, 
 			1) 같은 시점과 장소
