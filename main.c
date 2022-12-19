@@ -21,25 +21,64 @@
 
 ///일반적인 파일도 적용되도록 값 일반화 수정 (예시 파일) 
 
-int trackInfester(int patient_no, int *detected_time, int *place){
+int trackInfester(int patient_no, int *detected_time, int *place){//현재환 자 
 	int i;
-	for(i=0;i<5;i++)
+	int met_time;
+	int patient_ifc=100;
+	for(i=0;i<5;i++)//i번째 환자 
 	{
-		int met_time;
 		void *ifct_element;
 		ifct_element = ifctdb_getData(i);
 		//place_index=ifctele_getHistPlaceIndex(ifct_element,N_HISTORY-1)
-		met_time=isMet(ifct_element,patient_no,i);
+		met_time=isMet(patient_no,i);
+		/*
+		detected_time=ifctele_getinfestedTime(ifct_element)
+		place=*/
+		
 		if(met_time>0)//만났다면
 		{
-			if(met_time<isMet(ifct_element,patient_no,i+1))
+			if(met_time<patient_ifc)
 			{
-				patient_no=i;
+				patient_ifc=i;
 			}
 		 } 
 	}
-	return patient_no;
+	return patient_ifc;
 }
+
+int isMet(int index,int index_i){
+	int i;
+	int met_time;	
+	int time;
+	int place_ifc;
+	for(i=2;i<N_HISTORY;i++){
+		//int index;
+		void *ifct_element;
+		void *ifct_element_i;
+		ifct_element = ifctdb_getData(index);
+		ifct_element_i = ifctdb_getData(index_i);
+
+		
+		time=ifctele_getinfestedTime(ifct_element)-(N_HISTORY-i)+1;
+		index_i=convertTimeToIndex(time,ifctele_getinfestedTime(ifct_element_i));
+		place_ifc=ifctele_getHistPlaceIndex(ifct_element_i,index_i);
+		
+		
+		//ifctele_getHistPlaceIndex(ifct_element,time)
+		//현재환자의 i번쨰 이동장소 시점 계산;
+		
+		//계산된 시점에서의 대상환자 이동장소 계산;
+		if(ifctele_getHistPlaceIndex(ifct_element,i)==place_ifc){
+			met_time=time; 
+		} 
+		/*if(i번째 이동장소==대상환자 이동장소){
+			만난시간=i번쨰 이동장소 시점; 
+		} */
+	}
+	printf("4");
+	return (met_time); 
+}
+
 int main(int argc, const char * argv[]) {
     
     int menu_selection;
@@ -51,7 +90,11 @@ int main(int argc, const char * argv[]) {
     int age_min;
     int age_max;
     ifctele_getPlaceName(placeHist[1]);
-    
+	int patient_now;
+	int patient_ifc;
+	int patient_fir;
+	int place_index;
+	int detected_time;    
     //------------- 1. loading patient info file ------------------------------
     //1-1. FILE pointer open
     if (argc != 2)
@@ -115,6 +158,8 @@ int main(int argc, const char * argv[]) {
         printf("Select a menu :");
         scanf("%d", &menu_selection);
         fflush(stdin);
+        
+       
         
         switch(menu_selection) //n번째 환자 정보를 가져오고, printelement로 출력 
         {
@@ -192,34 +237,40 @@ int main(int argc, const char * argv[]) {
                 
             case MENU_TRACK: //감염경로 추적, 최초의 전파자 
             	//printf("Patient index :%i\n",);
-            	for(i=0;i<5;i++){
+            	/*
+				for(i=0;i<5;i++){
 				ifct_element = ifctdb_getData(i);
 				//pIndex=ifctele_getHistPlaceIndex(ifct_element,i);
-            	}
-            
-				int patient_now;
-				int patient_ifc;
-				int patient_fir;
-				int *place_index;
-				int *detected_time;
+            	}*/
 				
 				printf("Patient index :");
-				scanf("%i",patient_now);
+				scanf("%i",&patient_now);
+				//trackInfester(int patient_no, int *detected_time, int *place);
 				
 				while(0<=patient_now&&patient_now<=4){
-					ifct_element = ifctdb_getData(i);
-					place_index=ifctele_getHistPlaceIndex(ifct_element,4);
+					ifct_element = ifctdb_getData(patient_now);
+					printf("3");
+					place_index=ifctele_getHistPlaceIndex(ifct_element,);
 					detected_time=ifctele_getinfestedTime(ifct_element);
-					patient_ifc=trackInfester(patient_now,place_index,detected_time);
+					patient_ifc=trackInfester(patient_now,&detected_time,&place_index); 
 					if(0<=patient_ifc&&patient_ifc<=4){
-						printf("patient %i is infected by %i \n",patient_now, patient_ifc);}
+						printf("patient %i is infected by %i \n",patient_now, patient_ifc);
+						printf("2");}
 					else{
 						patient_fir=patient_now;
 						patient_now=patient_ifc; 
+						printf("1");
+					}//while 문 무한히 돌지 않게 
 					}
-					} 
+					/*
+					while(PPT )
+					{
+					if	patient_ifc=trackinfester(patient_now)
+					 else PPT
+					 } */
+					 
 			//"%i is the first infector!!"
-			//"The first infector of %i is %i"
+			printf("The first infector of %i is %i",patient_now,patient_fir);
 			
 			/*PPT에서 알고리즘에 답 있음, 
 			1) 같은 시점과 장소
@@ -255,6 +306,7 @@ int main(int argc, const char * argv[]) {
 				}
 				return 전파자;  
 			*/
+			
 			break;	  
             default:
                 printf("[ERROR Wrong menu selection! (%i), please choose between 0 ~ 4\n", menu_selection);

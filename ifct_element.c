@@ -225,7 +225,7 @@ int trackInfester(int index){
 	}
 	return 전파자;
 }*/
-
+/*
 int isMet(void* obj,int index,int index_i){
 	int i;
 	ifs_ele_t*ptr = (ifs_ele_t*)obj;
@@ -237,7 +237,7 @@ int isMet(void* obj,int index,int index_i){
 		
 		int time;
 		
-		
+		printf("I");
 		
 		time=ptr->detected_time-(N_HISTORY-i);
 		//현재환자의 i번쨰 이동장소 시점 계산;
@@ -250,9 +250,9 @@ int isMet(void* obj,int index,int index_i){
 		/*if(i번째 이동장소==대상환자 이동장소){
 			만난시간=i번쨰 이동장소 시점; 
 		} */
-	}
+	/*
 	return (met_time); 
-}
+}*/
 
 int convertTimeToIndex(int time,int infestedTime){
 	int index=-1;
@@ -261,5 +261,6 @@ int convertTimeToIndex(int time,int infestedTime){
 	{
 		index=N_HISTORY-(infestedTime-time)-1;
 	}
+	
 	return index;
 } 
