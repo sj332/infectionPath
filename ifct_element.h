@@ -19,5 +19,5 @@ unsigned int ifctele_getinfestedTime(void* obj);
 int ifctele_getAge(void* obj);
 void ifctele_printElement(void* obj);
 //int isMet(void* obj,int index,int index_i);
-int convertTimeToIndex(int time,int infestedTime);
+//int convertTimeToIndex(int time,int infestedTime);
 #endif /* ifct_element_h */

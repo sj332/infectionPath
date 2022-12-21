@@ -253,7 +253,7 @@ int isMet(void* obj,int index,int index_i){
 	/*
 	return (met_time); 
 }*/
-
+/*
 int convertTimeToIndex(int time,int infestedTime){
 	int index=-1;
 	
@@ -263,4 +263,4 @@ int convertTimeToIndex(int time,int infestedTime){
 	}
 	
 	return index;
-} 
+} */
