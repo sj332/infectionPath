@@ -149,33 +149,9 @@ void* ifctele_genElement(int index, int age, unsigned int detected_time,
 
 int ifctele_getHistPlaceIndex(void* obj, int index){ //인덱스 포함하여 수정 
 	ifs_ele_t*ptr=(ifs_ele_t*)obj;
-	/*
-	char ppp;
-	for(i=0;i<5;i++)){
-	if index==ptr->history_place[4]){
-			ifctele_printElement(ptr->index)
-			cnt++}*/
-	//ifctele_getPlaceName(ptr->history_place[4])
-	
-	/*		
-	else{
-		printf("There are %i patients detected in %s",cnt,ifctele_getPlaceName(ptr->index));}
-	*/
-	//int i;
 	return(ptr->history_place[index]);
 }
-/*
-	for(i=0;i<40;i++){  ///ERROR
-		if(ptr->history_place[4]==i){
-			index=i;
-		}
-	}
-	return(index);*/
- /*
-int function_{
-	ifs_ele_t ifs1;
-} 
-*/
+
 
 int ifctele_getAge(void* obj){
 	//구조체에서 나이의 값을 뺴줌
@@ -210,57 +186,4 @@ void ifctele_printElement(void* obj){
 	printf("\n");
 	return 0;
 }
-/*
-int trackInfester(int index){
-	for(i번째 환자)
-	{
-		만난시간=isMet(현재환자,i번째 환자);
-		if(만난시간>0)//만났다면
-		{
-			if(지금까지 환자 중 만난시간이 가장 이른가?)
-			{
-				전파자=i; 
-			}
-		 } 
-	}
-	return 전파자;
-}*/
-/*
-int isMet(void* obj,int index,int index_i){
-	int i;
-	ifs_ele_t*ptr = (ifs_ele_t*)obj;
-	int met_time;	
-	
-	for(i=2;i<N_HISTORY;i++){
-		
-		//int index;
-		
-		int time;
-		
-		printf("I");
-		
-		time=ptr->detected_time-(N_HISTORY-i);
-		//현재환자의 i번쨰 이동장소 시점 계산;
-		index=convertTimeToIndex(time,ptr->detected_time);
-		
-		//계산된 시점에서의 대상환자 이동장소 계산;
-		if(ptr->history_place[i]==ptr->history_place[index]){
-			met_time=time; 
-		} 
-		/*if(i번째 이동장소==대상환자 이동장소){
-			만난시간=i번쨰 이동장소 시점; 
-		} */
-	/*
-	return (met_time); 
-}*/
-/*
-int convertTimeToIndex(int time,int infestedTime){
-	int index=-1;
-	
-	if(time<=infestedTime&&time>infestedTime-N_HISTORY)
-	{
-		index=N_HISTORY-(infestedTime-time)-1;
-	}
-	
-	return index;
-} */
+
