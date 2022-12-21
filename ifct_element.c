@@ -11,8 +11,6 @@
 
 #include "ifct_element.h"
 
-//place_t배열문법으로 
-
 
 typedef enum place {
     Seoul,          //0
@@ -55,9 +53,9 @@ typedef enum place {
     Istanbul,       //37
     Dubai,          //38
     CapeTown        //39
-}place_t;
+}place_t;//place_t p[N_HISTORY];
 
-//place_t p[N_HISTORY];
+
 
 char countryName[N_PLACE+1][MAX_PLACENAME] =
 {   "Seoul",
@@ -104,6 +102,7 @@ char countryName[N_PLACE+1][MAX_PLACENAME] =
 };
 
 
+
 typedef struct ifs_ele{
 	int index;//번호 >> 정수 
 	int age;//나이 >> 정수 
@@ -112,11 +111,6 @@ typedef struct ifs_ele{
 } ifs_ele_t;
 
 
-//static ifs_ele_t ifsarray[20];//링크드리스트,배열형태구조체
-/*database c에 있음, 동적 메모리로 잡아서 이용
-데이터 인캡슐레이션
- 
-*/
 
 static int ifs_cnt;
 
@@ -142,30 +136,37 @@ void* ifctele_genElement(int index, int age, unsigned int detected_time,
 }
 
 
-int ifctele_getHistPlaceIndex(void* obj, int index){
+
+int ifctele_getHistPlaceIndex(void* obj, int index){ //index번째 장소 반환 함수  
 	ifs_ele_t*ptr=(ifs_ele_t*)obj;
 	return(ptr->history_place[index]);
 }
 
 
-int ifctele_getAge(void* obj){
+
+int ifctele_getAge(void* obj){ //연령 함수  
 	//구조체에서 나이의 값을 뺴줌
 	ifs_ele_t*ptr=(ifs_ele_t*)obj;
 	return(ptr->age);//나이 출력,포인터로 멤버에 접근
 }
 
 
-unsigned int ifctele_getinfestedTime(void* obj){
+
+unsigned int ifctele_getinfestedTime(void* obj){ //감염시점 함수 
 	ifs_ele_t*ptr=(ifs_ele_t*)obj;
 	return(ptr->detected_time);
 }
 
-char*ifctele_getPlaceName(int placeIndex)
+
+
+char*ifctele_getPlaceName(int placeIndex) //인덱스->나라명(영문) 함수 
 {
 	return countryName[placeIndex];
 }
 
-void ifctele_printElement(void* obj){
+
+
+void ifctele_printElement(void* obj){ //프린트 함수  
 	int i;
 	ifs_ele_t*ptr = (ifs_ele_t*)obj;
 	printf("index:%i\n",ptr->index);
@@ -178,7 +179,9 @@ void ifctele_printElement(void* obj){
 	printf("\n");
 }
 
-int convertTimeToIndex(int time,int infestedTime){
+
+
+int convertTimeToIndex(int time,int infestedTime){ //time에서의 장소 반환 함수 
 	int Index=-1;
 	
 	if((time<=infestedTime)&&(time>(infestedTime-N_HISTORY)))
@@ -187,34 +190,6 @@ int convertTimeToIndex(int time,int infestedTime){
 	}
 	
 	return Index;
-} /*
-int isMet(int index,int index_i){
-	int i;
-	int met_time;	
-	int time;
-	int time_i;
-	int place;
-	int place_ifc;
-	void *ifct_element;
-	void *ifct_element_i;
-	ifct_element = ifctdb_getData(index);
-	ifct_element_i = ifctdb_getData(index_i);
-	
-	for(i=2;i<N_HISTORY;i++){
-	
-		time=(ifctele_getinfestedTime(ifct_element)-(N_HISTORY-i)+1);
-		time_i=ifctele_getinfestedTime(ifct_element_i);
-		index_i=convertTimeToIndex((int)time,(int)time_i);
-		place_ifc=ifctele_getHistPlaceIndex(ifct_element_i,index_i);
-		
-		//ifctele_getHistPlaceIndex(ifct_element,time)
-		
-		//현재환자의 i번쨰 이동장소 시점 계산
-		//계산된 시점에서의 대상환자 이동장소 계산;
-		if(ifctele_getHistPlaceIndex(ifct_element,i+1)==place_ifc)
-		{
-			met_time=time-i;
-		} 
-		
-	}printf("met time %i",met_time);
-	return met_time; }*/
+} 
+
+

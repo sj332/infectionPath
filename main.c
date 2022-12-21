@@ -18,53 +18,48 @@
 
 #define TIME_HIDE           2
 
-int isMet(int index,int index_i){
+int isMet(int index,int index_i){ //두 환자의 전파 시점 함수 
 	int i;
-	int met_time=-1;	
-	int time;
-	int time_i;
-	int place;
-	int place_ifc;
-	void *ifct_element;
-	void *ifct_element_i;
-	ifct_element = ifctdb_getData(index);
+	int met_time; //만나는 시점	
+	int time; //현재 환자의 i번쨰 이동 시점  
+	int time_i; //대상 환자의 감염 시점 
+	int place_ifc; //대상 환자의 index_i 번째 장소 
+	int *ifct_element; //index의 포인터 
+	int *ifct_element_i; //index_i의 포인터 
+	ifct_element = ifctdb_getData(index); 
 	ifct_element_i = ifctdb_getData(index_i);
-	time_i=ifctele_getinfestedTime(ifct_element_i);
 	
 	for(i=2;i<N_HISTORY;i++){
 	
-		time=(ifctele_getinfestedTime(ifct_element)-(N_HISTORY-i)+1);//현재환자의 i번쨰 이동장소 시점 계산
+		time=(ifctele_getinfestedTime(ifct_element)-(N_HISTORY-i)-1); //현재환자의 i번쨰 이동장소 시점 계산
+		time_i=ifctele_getinfestedTime(ifct_element_i); //대상 환자의 감염 시점 계산  
+		index_i=convertTimeToIndex((int)time,(int)time_i); //계산된 시점에서의 대상환자 이동장소 계산
+		place_ifc=ifctele_getHistPlaceIndex(ifct_element_i,index_i); //대상 환자의 index_i번째 이동장소 계산 
 		
-		index_i=convertTimeToIndex((int)time,(int)time_i);	//계산된 시점에서의 대상환자 이동장소 계산;
-		place_ifc=ifctele_getHistPlaceIndex(ifct_element_i,index_i);
-		
-	
-		if(ifctele_getHistPlaceIndex(ifct_element,i)==place_ifc)
+		if(ifctele_getHistPlaceIndex(ifct_element,i)==place_ifc) //현재 환자의 i번째와 대상 환자의 index_i번째가 같을 경우 
 		{
 			met_time=time;
-		} 
-		
-	}printf("met time %i",met_time);
+		}}
 	return met_time; }
 
-int trackInfester(int patient_no, int *dectected_time, int *place){//현재환 자 
+int trackInfester(int patient_no, int *dectected_time, int *place){ //현재 환자 
 	int i;
 	int j;
 	int met_time;
-	int max_time[10];
+	int min_time[10];
 	int patient_ifc=10;
 	for(i=0;i<5;i++)//i번째 환자 
 	{
 		
 		met_time=isMet(patient_no,i);
 		
-		if(met_time>0)//만났다면
+		if(met_time>0&&met_time<100)//만났다면
 		{
-			max_time[i]=met_time;
+			min_time[i]=met_time;
 			for(j=0;j<5;j++){
-				if(met_time<=max_time[j])
+				if(met_time<=min_time[j])
 			{
-				patient_ifc=i;
+					patient_ifc=i;
 			}
 				
 		 } 
@@ -83,8 +78,8 @@ int main(int argc, const char * argv[]) {
     int pIndex, age, time;
     int placeHist[N_HISTORY];
     int i;
-    int age_min;
-    int age_max;
+    int age_min; //#3 나이 계산 변수 
+    int age_max; //#3 나이 계산 변수 
     ifctele_getPlaceName(placeHist[1]);
 	int patient_now=10;
 	int patient_ifc=10;
@@ -146,13 +141,13 @@ int main(int argc, const char * argv[]) {
         
        
         
-        switch(menu_selection) //n번째 환자 정보를 가져오고, printelement로 출력 
+        switch(menu_selection)
         {
             case MENU_EXIT:
                 printf("Exiting the program... Bye bye.\n");
                 break;
                 
-            case MENU_PATIENT:
+            case MENU_PATIENT: //n번째 환자 정보를 가져오고, printelement로 출력 
                 
                 printf("enter patient index: ");
 				scanf("%i",&pIndex);				
@@ -172,7 +167,7 @@ int main(int argc, const char * argv[]) {
 				for(i=0;i<5;i++)//환자 수만큼 반복  
 				{
 					ifct_element = ifctdb_getData(i);
-					place_index=ifctele_getHistPlaceIndex(ifct_element,N_HISTORY-1);
+					place_index=ifctele_getHistPlaceIndex(ifct_element,N_HISTORY-1); 
 					
 					if(!strcmp(ifctele_getPlaceName(place_index),placeinput))//문자열 나라명 비교 
 					{
@@ -200,19 +195,19 @@ int main(int argc, const char * argv[]) {
 				break;
                 
             case MENU_TRACK: //감염경로 추적, 최초의 전파자 
-				printf("Patient index :");
+				{printf("Patient index :");
 				scanf("%i",&patient_now);
 				ifct_element = ifctdb_getData(patient_now);
 				detected_time=ifctele_getinfestedTime(ifct_element);
 				for(i=0;i<N_HISTORY;i++){
 					place_index[i]=ifctele_getHistPlaceIndex(ifct_element,i);}
-				int *timetest=&detected_time;
-				int *placetest=&place_index[5];
+				int *timetest=detected_time; 
+				int *placetest=place_index[5];
 			
 						
 				while((0<=(int)patient_now)&&((int)patient_now<=4)){
-					printf("%i and %i ",patient_now,patient_ifc);
-					patient_ifc=trackInfester((int)patient_now,timetest,placetest); 	
+					
+					patient_ifc=trackInfester((int)patient_now,timetest,placetest); //현재환자의 전파자 찾기 	
 					if(0<=(int)patient_ifc&&(int)patient_ifc<=4){
 						printf("patient %i is infected by %i \n",patient_now, patient_ifc);
 						if((int)patient_fir==(int)patient_ifc){
@@ -220,14 +215,13 @@ int main(int argc, const char * argv[]) {
 							patient_now=patient_ifc;
 							break;
 					}}
-						else if(patient_fir==patient_now){
+					else{
 						patient_fir=patient_now;
-						patient_now=patient_ifc;}  
-						printf("%i is the first infector!!\n",patient_fir);
-						break;	
+						printf("%i is the first infector!!\n",patient_fir); 
+						break;}	
 					}
 				
-			
+		 		}
 			break;	  
             default:
                 printf("[ERROR Wrong menu selection! (%i), please choose between 0 ~ 4\n", menu_selection);
