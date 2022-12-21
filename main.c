@@ -196,13 +196,13 @@ int main(int argc, const char * argv[]) {
                 
             case MENU_TRACK: //감염경로 추적, 최초의 전파자 
 				{printf("Patient index :");
-				scanf("%i",&patient_now);
-				ifct_element = ifctdb_getData(patient_now);
-				detected_time=ifctele_getinfestedTime(ifct_element);
-				for(i=0;i<N_HISTORY;i++){
+				scanf("%i",&patient_now); //현재 환자 입력 
+				ifct_element = ifctdb_getData(patient_now); 
+				detected_time=ifctele_getinfestedTime(ifct_element); //감염 시점  
+				for(i=0;i<N_HISTORY;i++){ //현재 환자의 장소 인덱스 저장 
 					place_index[i]=ifctele_getHistPlaceIndex(ifct_element,i);}
-				int *timetest=detected_time; 
-				int *placetest=place_index[5];
+				int *timetest=detected_time; //현재 환자의 시점 포인터  
+				int *placetest=place_index[5]; //현재환자의 장소 배열 포인터  
 			
 						
 				while((0<=(int)patient_now)&&((int)patient_now<=4)){
