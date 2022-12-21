@@ -18,80 +18,59 @@
 
 #define TIME_HIDE           2
 
-int trackInfester(int patient_no, int *dectected_time, int *place);
-
-int convertTimeToIndex(int time,int infestedTime){
-	int Index=-1;
-	
-	if((time<=infestedTime)&&(time>(infestedTime-N_HISTORY)))
-	{
-		Index=N_HISTORY-(infestedTime-time)-1;
-		printf("result: %i",Index);
-	}
-	
-	return Index;
-} 
 int isMet(int index,int index_i){
 	int i;
-	int met_time;	
+	int met_time=-1;	
 	int time;
 	int time_i;
+	int place;
 	int place_ifc;
+	void *ifct_element;
+	void *ifct_element_i;
+	ifct_element = ifctdb_getData(index);
+	ifct_element_i = ifctdb_getData(index_i);
+	time_i=ifctele_getinfestedTime(ifct_element_i);
+	
 	for(i=2;i<N_HISTORY;i++){
-		void *ifct_element;
-		void *ifct_element_i;
-		ifct_element = ifctdb_getData(index);
-		ifct_element_i = ifctdb_getData(index_i);
-		//time_i=ifctele_getinfestedTime(ifct_element_i);
-		time=ifctele_getinfestedTime(ifct_element)-(N_HISTORY-i)+1;
-		time_i=ifctele_getinfestedTime(ifct_element_i);
-		printf("time: %i",time);
-		printf("time_i: %i",time_i);
-		index_i=convertTimeToIndex((int)time,(int)time_i);
-		printf("index_i: %i",index_i);
+	
+		time=(ifctele_getinfestedTime(ifct_element)-(N_HISTORY-i)+1);//현재환자의 i번쨰 이동장소 시점 계산
+		
+		index_i=convertTimeToIndex((int)time,(int)time_i);	//계산된 시점에서의 대상환자 이동장소 계산;
 		place_ifc=ifctele_getHistPlaceIndex(ifct_element_i,index_i);
 		
-		printf("\n time: %i index_i: %i place_ifc: %i\n",time,index_i,place_ifc);
-		//ifctele_getHistPlaceIndex(ifct_element,time)
-		
-		//현재환자의 i번쨰 이동장소 시점 계산
-		//계산된 시점에서의 대상환자 이동장소 계산;
+	
 		if(ifctele_getHistPlaceIndex(ifct_element,i)==place_ifc)
 		{
 			met_time=time;
 		} 
-		/*if(i번째 이동장소==대상환자 이동장소){
-			만난시간=i번쨰 이동장소 시점; 
-		} */
-	}
-	return (met_time); }
+		
+	}printf("met time %i",met_time);
+	return met_time; }
 
 int trackInfester(int patient_no, int *dectected_time, int *place){//현재환 자 
 	int i;
-	//, int *detected_time, int *place
+	int j;
 	int met_time;
-	int max_time;
-	int patient_ifc=100;
+	int max_time[10];
+	int patient_ifc=10;
 	for(i=0;i<5;i++)//i번째 환자 
 	{
-		//void *ifct_element;
-		//ifct_element = ifctdb_getData(i);
-		//place_index=ifctele_getHistPlaceIndex(ifct_element,N_HISTORY-1)
+		
 		met_time=isMet(patient_no,i);
-		/*
-		detected_time=ifctele_getinfestedTime(ifct_element)
-		place=*/
 		
 		if(met_time>0)//만났다면
 		{
-				if(met_time<=max_time)
+			max_time[i]=met_time;
+			for(j=0;j<5;j++){
+				if(met_time<=max_time[j])
 			{
 				patient_ifc=i;
-				max_time=met_time;
 			}
+				
 		 } 
-	}
+	}}
 	return patient_ifc;
+	
 }
 
 
@@ -107,17 +86,16 @@ int main(int argc, const char * argv[]) {
     int age_min;
     int age_max;
     ifctele_getPlaceName(placeHist[1]);
-	int patient_now;
-	int patient_ifc;
-	int patient_fir;
+	int patient_now=10;
+	int patient_ifc=10;
+	int patient_fir=10;
 	int place_index[30];
 	int detected_time; 
-	
-	int *timetest;
-	int *placetest;   
+	int *timetest=&detected_time;
+	int *placetest=&place_index[30];   
     //------------- 1. loading patient info file ------------------------------
     //1-1. FILE pointer open
-    if (argc != 2)
+    if (argc != 2) 
     {
         printf("[ERROR] syntax : infestPath (file path).");
         return -1;
@@ -135,10 +113,9 @@ int main(int argc, const char * argv[]) {
     while(3==fscanf(fp,"%d %d %d",&pIndex,&age,&time))  //3가지 읽기 
     {	
     	int i;
-		//printf("%i 번째 환자 감염 경로 : ",pIndex);
     	for(i=0;i<5;i++){
 			fscanf(fp,"%d",&placeHist[i]);
-    		//printf("%s\t",ifctele_getPlaceName(placeHist[i])); //구조체 넘기면 된다. 
+    		
     		
 		}
 		ifct_element=ifctele_genElement(pIndex,age,time,placeHist);
@@ -223,56 +200,33 @@ int main(int argc, const char * argv[]) {
 				break;
                 
             case MENU_TRACK: //감염경로 추적, 최초의 전파자 
-            	//printf("Patient index :%i\n",);
-            	/*
-				for(i=0;i<5;i++){
-				ifct_element = ifctdb_getData(i);
-				//pIndex=ifctele_getHistPlaceIndex(ifct_element,i);
-            	}*/
 				printf("Patient index :");
 				scanf("%i",&patient_now);
-				isMet(2,3);
-				while((0<=patient_now)&&(patient_now<=4)){
-					ifct_element = ifctdb_getData(patient_now);
-					detected_time=ifctele_getinfestedTime(ifct_element);
-					patient_ifc=trackInfester(patient_now); 
-					if((0<=patient_ifc)&&(patient_ifc<=4)){
+				ifct_element = ifctdb_getData(patient_now);
+				detected_time=ifctele_getinfestedTime(ifct_element);
+				for(i=0;i<N_HISTORY;i++){
+					place_index[i]=ifctele_getHistPlaceIndex(ifct_element,i);}
+				int *timetest=&detected_time;
+				int *placetest=&place_index[5];
+			
+						
+				while((0<=(int)patient_now)&&((int)patient_now<=4)){
+					printf("%i and %i ",patient_now,patient_ifc);
+					patient_ifc=trackInfester((int)patient_now,timetest,placetest); 	
+					if(0<=(int)patient_ifc&&(int)patient_ifc<=4){
 						printf("patient %i is infected by %i \n",patient_now, patient_ifc);
-						if(patient_fir==patient_ifc){
-						printf("%i is the first infector!!",patient_fir);
-						break;
+						if((int)patient_fir==(int)patient_ifc){
+							printf("The first infector of %i is %i\n",patient_now,patient_fir);
+							patient_now=patient_ifc;
+							break;
 					}}
-					
-					else{
+						else if(patient_fir==patient_now){
 						patient_fir=patient_now;
 						patient_now=patient_ifc;}  
+						printf("%i is the first infector!!\n",patient_fir);
+						break;	
 					}
-					
-					//convertTimeToIndex(8,10);
-					//convertTimeToIndex(10,12);
-					//convertTimeToIndex(5,7);
-					//convertTimeToIndex(11,13);
-					//convertTimeToIndex(6,8);
-					/*
-					while(PPT )
-					{
-					if	patient_ifc=trackinfester(patient_now)
-					 else PPT
-					 } */
-					  
-			//"%i is the first infector!!"
-			//printf("The first infector of %i is %i",patient_now,patient_fir);
-			//printf("%i",convertTimeToIndex(5,time));
-			
-			/*PPT에서 알고리즘에 답 있음, 
-			1) 같은 시점과 장소
-			2) 1일 전, 2일 전에 전피 가능 
-			3) , 잠복기중 전염x 2////일 전,  3일 전, 4일 전에 잠복 가능
-			배열의 N번쨰와 다른 환자의 N+2번쪠가 같은지 
-			날짜 상으로 배열[N]==다른배열[F]인 부분을 찾아내야 
-			isMet(), trackInfester 계싼 
-			*/
-		
+				
 			
 			break;	  
             default:
